@@ -13,11 +13,6 @@ def index(request):
         "listing": Auction.objects.all()
     })
 
-def new(request):
-    return render(request, "auctions/new.html", {
-        "listings": Auction.objects.all()
-    })
-
 def login_view(request):
     if request.method == "POST":
 

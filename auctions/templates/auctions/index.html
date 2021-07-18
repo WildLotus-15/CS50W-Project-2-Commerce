@@ -1,27 +1,29 @@
 {% extends "auctions/layout.html" %}
-
 {% block body %}
 <h2>Active Listings</h2>
 {% for listing in listing %}
-<div class="row">
-    <div class="card mb-3" style="width: 1345px;">
-        <div class="row g-0">
-            <div class="col-md-4">
-                {% if listing.image_url %}
-                    <img src="{{ listing.image_url }}" class="img-fluid rounded-start" alt="listing-image">
-                {% endif %}
-            </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title">{{ listing.title }}</h5>
-                    <p class="card-text">Price: ${{ listing.price }}</p>
-                    <p class="card-text">{{ listing.description }}</p>
-                    <p class="card-text"><small class="text-muted">Created {{ listing.date }}</small></p>
+    <div class="row">
+        <div class="col">
+            <div class="card mb-3" style="width: 1345px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        {% if listing.image_url %}
+                        <img src="{{ listing.image_url }}" class="img-fluid rounded-start" alt="listing-image"
+                            style="max-width: 60%; margin-left: 50px;">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ listing.title }}</h5>
+                            <p class="card-text font-weight-bold">Price: ${{ listing.price }}</p>
+                            <p class="card-text" style="font-size: 20px;">{{ listing.description }}</p>
+                            <p class="card-text"><small class="text-muted">Created {{ listing.date }}</small></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endfor %}
+{% endfor %}    
 
 {% endblock %}
