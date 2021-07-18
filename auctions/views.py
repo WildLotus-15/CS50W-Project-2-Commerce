@@ -3,13 +3,20 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from .models import Auction
 
 from .models import User
 
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        "listing": Auction.objects.all()
+    })
 
+def new(request):
+    return render(request, "auctions/new.html", {
+        "listings": Auction.objects.all()
+    })
 
 def login_view(request):
     if request.method == "POST":

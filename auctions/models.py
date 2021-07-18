@@ -13,7 +13,7 @@ class Auction(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.title}: {self.description}, price={self.price}"
+        return f"{self.title}: {self.description} price=${self.price}"
     
 class Bid(models.Model):
     auction = models.ManyToManyField(Auction, blank=True, related_name="bids")
