@@ -3,13 +3,17 @@
 {% block title %}{{ listing.title }}{% endblock title %}
 
 {% block body %}
-    <h1>Listing: {{ listing.title }} {{ listing.id }}</h1>
+    <h1>Listing: {{ listing.title }}</h1>
     {% if listing.image_url %}
         <img src="{{ listing.image_url }}" alt="listing-image" style="max-width: 300px;">
     {% else %}
         <p>No image provided.</p>
     {% endif %}
-    <p style="font-size: 17px">{{ listing.description }}</p>
-    <p class="font-weight-bold" style="font-size: 20px">${{ listing.price }}</p>
+    <p style="font-size: 17px">Description: {{ listing.description }}</p>
+    {% if listing.price %}
+        <p class="font-weight-bold" style="font-size: 20px">Price: ${{ listing.price }}</p>
+    {% else %}
+        <p class="font-weight-bold" style="font-size: 20px">Price: ${{ listing.starting_bid }}</p>
+    {% endif %}
     <a href="{% url 'index' %}">Back to all listings.</a>
 {% endblock body %}

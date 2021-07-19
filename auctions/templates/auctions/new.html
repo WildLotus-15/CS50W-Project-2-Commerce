@@ -2,12 +2,11 @@
 
 {% block title %}Create new listing{% endblock title %}
 
-{% block content %}
-    {% for listing in listings %}
-        {{ listing.title }} {{ listing.description }} {{ listing.price }}
-        {% if listing.image_url %}
-            {{ listing.image_url }}
-        {% endif %}
-        {{ listing.date }}
-    {% endfor %}        
-{% endblock content %}
+{% block body %}
+    <h1>Create Listing</h1>
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create</button>
+    </form>  
+{% endblock body %}

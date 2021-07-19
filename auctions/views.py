@@ -3,10 +3,13 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .models import Listing
+from .models import Listing, User
+from django.views.generic import CreateView
 
-from .models import User
-
+class CreateListing(CreateView):
+    model = Listing
+    template_name = 'auctions/new.html'
+    fields = ('title', 'description', 'starting_bid', 'image_url')
 
 def index(request):
     return render(request, "auctions/index.html", {
