@@ -5,11 +5,16 @@ from django.shortcuts import render
 from django.urls import reverse
 from .models import Listing, User
 from django.views.generic import CreateView
+from django.forms import ModelForm
 
-class CreateListing(CreateView):
+class NewListing(CreateView):
     model = Listing
     template_name = 'auctions/new.html'
-    fields = ('title', 'description', 'starting_bid', 'image_url')
+    fields = ('title', 'description', 'starting_bid', 'image_url', 'category')
+
+    def form_valid(self, form):
+        form.istance.author = self.request.user
+        return super().form_valid(form)
 
 def index(request):
     return render(request, "auctions/index.html", {
@@ -17,11 +22,13 @@ def index(request):
     })
 
 def listing(request, listing_id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('login'))
     listing = Listing.objects.get(pk=listing_id)
     return render(request, "auctions/listing.html", {
-        "listing": listing
+        "listing": listing,
+        "comments": listing.comments.all()
     })
-
 
 def login_view(request):
     if request.method == "POST":

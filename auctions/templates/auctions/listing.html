@@ -3,17 +3,15 @@
 {% block title %}{{ listing.title }}{% endblock title %}
 
 {% block body %}
-    <h1>Listing: {{ listing.title }}</h1>
-    {% if listing.image_url %}
-        <img src="{{ listing.image_url }}" alt="listing-image" style="max-width: 300px;">
-    {% else %}
-        <p>No image provided.</p>
-    {% endif %}
-    <p style="font-size: 17px">Description: {{ listing.description }}</p>
-    {% if listing.price %}
-        <p class="font-weight-bold" style="font-size: 20px">Price: ${{ listing.price }}</p>
-    {% else %}
-        <p class="font-weight-bold" style="font-size: 20px">Price: ${{ listing.starting_bid }}</p>
-    {% endif %}
-    <a href="{% url 'index' %}">Back to all listings.</a>
+<div class="card" style="width: 300px;">
+    <img class="card-img-top" src="{{ listing.image_url }}" alt="Card image cap" style="height: 300px">
+    <div class="card-body">
+        <strong><h5 class="card-title">Listing: {{ listing.title }}</h5></strong>
+        <p class="card-text">Description: {{ listing.description }}</p>
+        <p class="card-text">Price: ${{ listing.starting_bid }}</p>
+    </div>
+    <div class="card-body">
+        <a href="{% url 'index' %}" class="card-link">Back to all listings</a>
+    </div>
+</div>
 {% endblock body %}

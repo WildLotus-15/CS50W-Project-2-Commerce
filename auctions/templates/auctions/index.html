@@ -17,11 +17,7 @@
                     <div class="col-md-8">
                         <div class="card-body">
                             <h5 class="card-title">{{ listing.title }}</h5>
-                            {% if listing.price %}
-                                <p class="card-text font-weight-bold">Price: ${{ listing.price }}</p>
-                            {% else %}
-                                <p class="card-text font-weight-bold">Price: ${{ listing.starting_bid }}</p>
-                            {% endif %}
+                            <p class="card-text font-weight-bold">Price: ${{ listing.starting_bid }}</p>
                             <p class="card-text" style="font-size: 20px;">{{ listing.description }}</p>
                             <p class="card-text"><small class="text-muted">Created {{ listing.date }}</small></p>
                         </div>
