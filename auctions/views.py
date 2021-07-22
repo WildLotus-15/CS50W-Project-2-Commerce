@@ -7,14 +7,23 @@ from .models import Listing, User
 from django.views.generic import CreateView
 from django.forms import ModelForm
 
-class NewListing(CreateView):
-    model = Listing
-    template_name = 'auctions/new.html'
-    fields = ('title', 'description', 'starting_bid', 'image_url', 'category')
+class NewListingForm(ModelForm):
+    class Meta:
+        model = Listing
+        fields = ('title', 'description', 'starting_bid', 'image_url', 'category')
 
-    def form_valid(self, form):
-        form.istance.author = self.request.user
-        return super().form_valid(form)
+def newListing(request):
+    if request.method == "POST":
+        form = NewListingForm()
+        if form.is_valid():
+            NewListing = form.save()
+            NewListing.creator = request.user
+            NewListing.save()
+
+    return render(request, "auctions/new.html", {
+        'form': NewListingForm(),
+        "success": True,
+    })
 
 def index(request):
     return render(request, "auctions/index.html", {

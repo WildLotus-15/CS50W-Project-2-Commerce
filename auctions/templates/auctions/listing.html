@@ -3,15 +3,19 @@
 {% block title %}{{ listing.title }}{% endblock title %}
 
 {% block body %}
-<div class="card" style="width: 300px;">
-    <img class="card-img-top" src="{{ listing.image_url }}" alt="Card image cap" style="height: 300px">
+<div class="card" style="width: 400px;">
+    <img class="card-img-top" src="{{ listing.image_url }}" alt="Card image cap" style="height: 300px; width: 350px; display: block; margin: auto">
     <div class="card-body">
         <strong><h5 class="card-title">Listing: {{ listing.title }}</h5></strong>
         <p class="card-text">Description: {{ listing.description }}</p>
         <p class="card-text">Price: ${{ listing.starting_bid }}</p>
     </div>
     <div class="card-body">
-        <a href="{% url 'index' %}" class="card-link">Back to all listings</a>
+        <h5>Details:</h5>
+        <ul>
+            <li>Listed by: {{ listing.creator }}</li>
+            <li>Category: {{ listing.category }}</li>
+        </ul>
     </div>
 </div>
 {% endblock body %}
