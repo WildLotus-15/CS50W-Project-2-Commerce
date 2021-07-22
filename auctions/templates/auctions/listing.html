@@ -4,11 +4,16 @@
 
 {% block body %}
 <div class="card" style="width: 400px;">
-    <img class="card-img-top" src="{{ listing.image_url }}" alt="Card image cap" style="height: 300px; width: 350px; display: block; margin: auto">
+    {% if listing.image_url %}
+        <img class="card-img-top" src="{{ listing.image_url }}" alt="Card image cap">
+    {% else %}
+        <p class="card-top" style="text-align: center; margin: 100px;">No image specified</p>
+    {% endif %}
     <div class="card-body">
         <strong><h5 class="card-title">Listing: {{ listing.title }}</h5></strong>
         <p class="card-text">Description: {{ listing.description }}</p>
         <p class="card-text">Price: ${{ listing.starting_bid }}</p>
+        <a href="{% url 'index' %}">Back to all listings.</a>
     </div>
     <div class="card-body">
         <h5>Details:</h5>
