@@ -5,12 +5,14 @@
 {% block body %}
 <div class="card" style="width: 400px;">
     {% if listing.image_url %}
-        <img class="card-img-top" src="{{ listing.image_url }}" alt="Card image cap">
+    <img class="card-img-top" src="{{ listing.image_url }}" alt="Card image cap">
     {% else %}
-        <p class="card-top" style="text-align: center; margin: 100px;">No image specified</p>
+    <p class="card-top" style="text-align: center; margin: 100px;">No image specified</p>
     {% endif %}
     <div class="card-body">
-        <strong><h5 class="card-title">Listing: {{ listing.title }}</h5></strong>
+        <strong>
+            <h5 class="card-title">Listing: {{ listing.title }}</h5>
+        </strong>
         <p class="card-text">Description: {{ listing.description }}</p>
         <p class="card-text">Price: ${{ listing.starting_bid }}</p>
         <a href="{% url 'index' %}">Back to all listings.</a>
@@ -22,5 +24,16 @@
             <li>Category: {{ listing.category }}</li>
         </ul>
     </div>
+    Comments:
+    {% for comment in listing.comments.all %}
+    <p>
+        <span class="font-weight-bold">{{ comment.author }}</span> &middot; {{ comment }}
+    </p>
+    {% endfor %}
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ add_comment }}
+        <button type="submit">Add comment</button>
+    </form>
 </div>
 {% endblock body %}

@@ -3,14 +3,21 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from .models import Listing, User
-from django.views.generic import CreateView
+from .models import Listing, User, Comment
+from django.views.generic import DeleteView
 from django.forms import ModelForm
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class NewListingForm(ModelForm):
     class Meta:
         model = Listing
         fields = ('title', 'description', 'starting_bid', 'image_url', 'category')
+
+class NewCommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ('comment',)
 
 def newListing(request):
     if request.method == "POST":
@@ -25,6 +32,16 @@ def newListing(request):
         "success": True,
     })
 
+class DeleteListing(LoginRequiredMixin, DeleteView):
+    model = Listing
+    template_name="auctions/delete.html"
+    success_url = reverse_lazy('index')
+    login_url = 'login'
+
+    def test_func(self):
+        obj = self.get_object()
+        return obj.author == self.request.user
+
 def index(request):
     return render(request, "auctions/index.html", {
         "listing": Listing.objects.all()
@@ -36,7 +53,8 @@ def listing(request, listing_id):
     listing = Listing.objects.get(pk=listing_id)
     return render(request, "auctions/listing.html", {
         "listing": listing,
-        "comments": listing.comments.all()
+        "comments": listing.comments.all(),
+        "add_comment": NewCommentForm()
     })
 
 def login_view(request):
