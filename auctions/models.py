@@ -15,9 +15,10 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField()
     starting_bid = models.DecimalField(decimal_places=2, max_digits=5, null=True)
-    current_bid = models.DecimalField(decimal_places=2, max_digits=5, null=True, blank=True)
+    current_bid = models.FloatField(null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, related_name="similar_listings")
-    creator = models.ForeignKey(User, on_delete=models.PROTECT, null=True, related_name="creator") 
+    creator = models.ForeignKey(User, on_delete=models.PROTECT, null=True, related_name="creator")
+    active_listing = models.BooleanField(default=True) 
     image_url = models.URLField(blank=True, max_length=255)
     date = models.DateTimeField(auto_now_add=True)
 
@@ -29,11 +30,11 @@ class Listing(models.Model):
     
 class Bid(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=True, related_name="bids", null=True)
-    offer = models.DecimalField(max_digits=5, decimal_places=2, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    offer = models.FloatField(null=True)  
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return f"{self.auction}'s starting bid {self.offer}"
+        return f"{self.offer}"
     
 class Comment(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=True, related_name="comments", null=True)
